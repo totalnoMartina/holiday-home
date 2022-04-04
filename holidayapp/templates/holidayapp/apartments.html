@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container d-flex justify-content-md-center mt-4">
+    <div class="row my-3 p-2">
+        <div class="col-md-auto text-white font-weight-bold">
+            {% for apartment in apartments %}
+            <p class="display-3 text-center mt-4">
+                <span class="backg p-2 mt-3 rounded">"{{ apartment.apartment_name }}"</span></p>
+            <div id="carouselIndicators-{{ forloop.counter }}" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carouselIndicators-{{ forloop.counter }}" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselIndicators-{{ forloop.counter }}" data-slide-to="1"></li>
+                    <li data-target="#carouselIndicators-{{ forloop.counter }}" data-slide-to="2"></li>
+                    <li data-target="#carouselIndicators-{{ forloop.counter }}" data-slide-to="3"></li>
+                    <li data-target="#carouselIndicators-{{ forloop.counter }}" data-slide-to="4"></li>
+                    <li data-target="#carouselIndicators-{{ forloop.counter }}" data-slide-to="5"></li>
+                    <li data-target="#carouselIndicators-{{ forloop.counter }}" data-slide-to="6"></li>
+                    <li data-target="#carouselIndicators-{{ forloop.counter }}" data-slide-to="7"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item active mx-auto my-4">
+                        <img src="{{ apartment.image1.url }}" class="d-block w-75 px-3 mx-auto img-fluid" height="350px" alt="front view image">
+                    </div>
+                    <div class="carousel-item mx-auto my-4">
+                        <img src="{{ apartment.image2.url }}" class="d-block w-75 px-3 mx-auto img-fluid" height="350px" alt="front view image">
+                    </div>
+                    <div class="carousel-item mx-auto my-4">
+                        <img src="{{ apartment.image3.url }}" class="d-block w-75 px-3 mx-auto img-fluid" height="350px" alt="balcony image">
+                    </div>
+                    <div class="carousel-item mx-auto my-4">
+                        <img src="{{ apartment.image4.url }}" class="d-block w-75 px-3 mx-auto img-fluid" height="350px" alt="front view image">
+                    </div>
+                    <div class="carousel-item mx-auto my-4">
+                        <img src="{{ apartment.front_image5.url }}" class="d-block w-75 px-3 mx-auto img-fluid" height="350px" alt="front view image">
+                    </div>
+                    <div class="carousel-item mx-auto my-4">
+                        <img src="{{ apartment.image6.url }}" class="d-block w-75 px-3 mx-auto img-fluid" height="350px" alt="front view image">
+                    </div>
+                    <div class="carousel-item mx-auto my-4">
+                        <img src="{{ apartment.image7.url }}" class="d-block w-75 px-4 mx-auto img-fluid" height="350px" alt="front view image">
+                    </div>
+                    <div class="carousel-item mx-auto my-4">
+                        <img src="{{ apartment.image8.url }}" class="d-block w-75 px-3 mx-auto img-fluid" height="350px" alt="front view image">
+                    </div>
+                </div>
+
+                <a class="carousel-control-prev" href="#carouselIndicators-{{ forloop.counter }}" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselIndicators-{{ forloop.counter }}" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+            <div class="col backg text-white font-weight-bold rounded py-1 mb-5">{{ apartment.description|safe }}</div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<div class="container col-md-6 mb-4">
+    <article class="media">
+        <div class="media-content">
+            <div class="content">
+                <a href="#" class="btn btn-primary text-white my-3">Add new Feedback</a>
+            </div>
+        </div>
+    </article>
+    {% if user.is_authenticated %}
+    {% for feedback in feedbacks %}
+
+    <div class="main-content mb-4 p-1 mx-2">
+        <div class="col">
+            <strong class="text-white">{{ feedback.date_posted }}</strong>
+            <br>
+            <div class="bg-white rounded p-2">
+                {{ feedback.text }}
+            </div>
+            <br>
+            <div class="text-white">
+                Posted by {{ user.name }}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}
