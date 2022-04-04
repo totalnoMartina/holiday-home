@@ -42,7 +42,7 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light fixed-top rounded-bottom">
-        <a class="navbar-brand text-white btn-yellow" href="#">Welcome</a>
+        <a class="navbar-brand text-white btn-yellow" href="{% url 'home' %}">Welcome</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -70,10 +70,10 @@
                         <a class="dropdown-item text-white" href="#">My Profile</a>
                         <a class="dropdown-item text-white" href="#">Feedback</a>
                         <a class="dropdown-item text-white" href="#">Add Feedback</a>
-                        <a class="dropdown-item text-white" href="#">Logout</a>
+                        <a class="dropdown-item text-white" href="{% url 'account_logout' %}">Logout</a>
                         {% else %}
-                        <a href="#" class="dropdown-item text-white"><span>Register</span></a>
-                        <a href="#" class="dropdown-item text-white"><span>Login</span></a>
+                        <a href="{% url 'account_signup' %}" class="dropdown-item text-white"><span>Register</span></a>
+                        <a href="{% url 'account_login' %}" class="dropdown-item text-white"><span>Login</span></a>
                         {% endif %}
                     </div>
                 </li>
@@ -97,10 +97,13 @@
 
                 /// Collapse every *navbar-collapse*
                 $('.navbar-collapse').removeClass('show');
+
             }
         });
     </script>
+
     {% endblock %}
+
     <footer class="w-100 p-1 mt-4 text-center text-white rounded-top fixed-bottom">
         <strong>Owners : Jasna & Zdravko Grganic, Klanfari 33, 51265 Dramalj, Crikvenica Phone Number: +385 51 xxx-xxx</strong>
         <a href="mailto:martina01061987@gmail.com" target="_blank" class="text-white"> Send us an email here!</a>
