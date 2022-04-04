@@ -12,6 +12,10 @@ body {
 
 }
 
+.carousel-inner {
+    height: 350px !important;
+}
+
 .backg {
     background: rgba(5, 68, 110, 0.7) !important;
     color: white !important;

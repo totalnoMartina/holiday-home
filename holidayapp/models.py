@@ -2,12 +2,13 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-APARTMENTS = (('Tony', 'Tony Apartment for max4 people'),
-                ('Matea', 'Matea apartment for max4 people'),
-                ('Martina', 'Martina apartment for max6 people'))
+
 
 class Apartment(models.Model):
     """ A model for apartment """
+    APARTMENTS = (('Tony', 'Tony Apartment for max4 people'),
+                ('Matea', 'Matea apartment for max4 people'),
+                ('Martina', 'Martina apartment for max6 people'))
     apartment_name = models.CharField(choices=APARTMENTS, max_length=10, primary_key=True)
     beds_nr = models.IntegerField()
     guest_nr = models.IntegerField()

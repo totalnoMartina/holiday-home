@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     # 'allauth.socialaccount.providers.facebook',
     # My apps
     'holidayapp',
-
+    'holidayapp.book_func',
 ]
 
 SITE_ID = 1
