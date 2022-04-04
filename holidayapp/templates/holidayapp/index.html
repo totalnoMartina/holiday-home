@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid my-5">
+    <div class="row mx-auto">
+        {% if messages %}
+        <div class="text-white mx-auto bg-primary rounded p-2" id="message-container">
+            <strong>Feedback:</strong>
+            <ul>
+                {% for message in messages %}
+                <li>{{message}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+    <div class="col my-2">
+        <a class="weatherwidget-io mt-5 mx-auto rounded" href="https://forecast7.com/en/45d1714d69/crikvenica/" data-label_1="CRIKVENICA" data-label_2="WEATHER" data-theme="weather_one">CRIKVENICA WEATHER</a>
+        <script>
+            ! function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (!d.getElementById(id)) {
+                    js = d.createElement(s);
+                    js.id = id;
+                    js.src = 'https://weatherwidget.io/js/widget.min.js';
+                    fjs.parentNode.insertBefore(js, fjs);
+                }
+            }(document, 'script', 'weatherwidget-io-js');
+        </script>
+        <div class="container mt-2">
+            <div class="row">
+                <div class="col">
+                    <h2 class="text-white text-center font-weight-bold">Exact location of Klanfari 33, Dramalj</h2>
+                    <div id='map' style="width: 500px; height: 400px;" class="mb-5 rounded"></div>
+                    {% block extra_js %}
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+                    <script type='text/javascript'>
+                        function initMap() {
+                            var map = new google.maps.Map(document.getElementById('map'), {
+                                center: {
+                                    lat: 45.21028,
+                                    lng: 14.65417
+                                },
+                                zoom: 10
+                            });
+                            map.setMapTypeId('satellite');
+                        }
+                    </script>
+                    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCB2euvdjQ0MmClCHx99xueO2QOFStgtKA&callback=initMap" async defer></script>
+                    {% endblock %}
+                </div>
+
+                <div class="col mx-auto mt-5 text-center">
+                    <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/301345428.jpg?k=a80761708a84508f62073aaa9733b10340d8dc2ee15640267b0832b4e237fd44&o=&hp=1" class="rounded-circle mx-auto" width="200" height="200">
+                    <h3 class="text-center text-white font-weight-bold">Holiday Home Klanfari</h3>
+                    <p class="text-black text-center bg-light p-2 rounded">
+                        Holiday Home Klanfari has been welcoming guests since 2017, during summer season
+                        in Croatia, providing accomodation, room service, help with suggestions on which
+                        restaurant, island or venue to visit, as well as directions of any kind. Hosts
+                        speak German, Croatian(native)
+                    </p>
+                    <p><a class="btn btn-info" href="https://www.facebook.com/jasna.grganic" target="_blank" role="button">
+                            <i class="fa fa-facebook-square" aria-hidden="true"></i>
+                            Owners Facebook</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col mx-auto mt-5 text-center">
+            <img src="https://img.marinas.com/v2/080dc2269a142465e46b477c689f689dad420b506cc9cf424e029c60c11c09e4.jpg" class="rounded-circle mx-auto" width="200" height="200">
+            <h3 class="text-center text-white font-weight-bold">Kacjak Beach</h3>
+            <p class="text-black text-center bg-light p-2 rounded">
+                Only 1 km north-west of the property, there is Kacjak,a small penninsula
+                with a harbour, FKK beach, Pizzeria, Tennis Court, Mini Golf and a
+                playground for yougsters. About 50 Camp-houses can find a spot and
+                enjoy the summer in this Touristic Camp and/or in the Bungalows
+                within Tourist Village 'Kacjak' where full room-service is provided.
+                There is a Reception, Parking, a small Coffee Bar, a Fast-Food Deli
+                right on the beach and an Ice-Cream stand to help cool of the hot
+                summer days. There is also a restaurant with a terrace and live
+                music during summer nights.
+            </p>
+            <p><a class="btn btn-info" href="https://www.jadran-crikvenica.hr/paviljoni-bungalovi-kacjak" target="_blank" role="button">
+                    Tourism Village 'Kacjak'</a></p>
+        </div>
+        <div class="col mx-auto mt-5 text-center">
+            <img src="https://photo620x400.mnstatic.com/b780893847b2e3ed888644e06a5254c8/domino.jpg" class="rounded-circle mx-auto" width="200" height="200">
+            <h3 class="text-center text-white font-weight-bold">Restaurant Domino</h3>
+            <p class="text-black text-center bg-light p-2 rounded">
+                In the heart of Dramalj, about 15-minute walk from the property,
+                there is Domino, a Mediterranean seafood restaurant. There is indoor seatings
+                and a lovely terrace surrounded with a few trees and bushes for a real
+                natural experience. About 5 minute-walk from "Lanterna Beach" in Dramalj.</p>
+            <p><a class="btn btn-info" href="https://domino-dramalj.com/restaurant/" target="_blank" role="button">
+                    Restaurant Domino Website</a></p>
+        </div>
+    </div>
+    <div class="col-md-4 text-center mx-auto mt-4">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/ec/Crikvenica_072.jpg" class="rounded-circle mx-auto" width="200" height="200">
+        <h3 class="text-center text-white font-weight-bold">Crikvenica City</h3>
+        <p class="text-black text-center bg-light p-2 rounded">
+            Only 5 km east of the property, there is Crikvenica,
+            a small coastal city with vibrant nightlife and variety of bars and
+            restaurants. The main beach is sandy and there are rocky beaches alongside
+            the coastal area. Crikvenica was developed on the site of a Roman era settlement
+            and military base called 'Ad Turres'. In the 19th century Crikvenica began to
+            attract many tourists, which brought about a turning point in its history.
+            In the late 19th and early 20th century, Crikvenica was a district capital in
+            the Modruš-Rijeka County of the Kingdom of Croatia-Slavonia.
+            <a href="https://en.wikipedia.org/wiki/Crikvenica">Crikvenica Wikipedia</a>
+
+        </p>
+        <p><a class="btn btn-info" href="https://www.tripadvisor.ie/Tourism-g303805-Crikvenica_Primorje_Gorski_Kotar_County-Vacations.html" target="_blank" role="button">
+                According to TripAdvisor - About Crikvenica</a></p>
+    </div>
+
+</div>
+
+<div class="container mx-auto text-center">
+    <div class="bg-white font-weight-bold rounded-top py-2">Pricelist</div>
+    <table class="table table-striped table-hover bg-white mb-5 text-center rounded-bottom">
+        <thead>
+            <tr>
+                <th scope="col">Apartment</th>
+                <th scope="col">Capacity & Size</th>
+                <th scope="col">Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Matea</th>
+                <td>2 Double beds - 4 people/ 50m<sup>2</sup></td>
+                <td>80 Euro / Night</td>
+            </tr>
+            <tr>
+                <th scope="row">Tony</th>
+                <td>2 Double beds - 4 people/ 50m<sup>2</sup></td>
+                <td>80 Euro / Night</td>
+            </tr>
+            <tr>
+                <th scope="row">Martina</th>
+                <td>3 Double beds - 6 people/ 100m<sup>2</sup></td>
+                <td>120 Euro / Night</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+{% block postloadjs %}
+<!-- for the messages to timeout -->
+var message_el = document.getElementById("message_container");
+
+setTimeout(function() {
+message_el.style.display = "none";
+}, 3000);
+{% endblock %}
+
+{% endblock %}
