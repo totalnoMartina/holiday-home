@@ -2,8 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-
-
 class Apartment(models.Model):
     """ A model for apartment """
     APARTMENTS = (('Tony', 'Tony Apartment for max4 people'),
@@ -24,7 +22,17 @@ class Apartment(models.Model):
 
     def __str__(self):
             """ Showing apartment class model created """
-            return f'An apartment {self.apartment_name} with {self.beds_nr} beds for {self.guest_nr} is created'
+            return f' {self.apartment_name} with {self.beds_nr} beds.'
+
+class ApartmentPrice(models.Model):
+    APARTMENTS = (('Tony', 'Tony'),
+                ('Matea', 'Matea'),
+                ('Martina', 'Martina'))
+    apartment_name = models.CharField(choices=APARTMENTS, max_length=20)
+    price = models.FloatField()
+    
+    def __str__(self):
+        return f'{self.name_of_app} has a price of {self.price}'
 
 
 class Booking(models.Model):

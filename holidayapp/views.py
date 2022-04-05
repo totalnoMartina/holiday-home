@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from .models import Apartment, Booking, Guest
+from django.shortcuts import render, HttpResponse
+from .models import Apartment, Booking, Guest, ApartmentPrice
 from django.views.generic import View
 from .forms import AvailabilityForm, GuestForm
 
@@ -9,7 +9,7 @@ def index(request):
 
     return render(request, 'holidayapp/index.html')
 
-def apartments_view(request):
+def apartments(request):
     """ A page to view apartments """
     apartments = Apartment.objects.all()
 
@@ -19,6 +19,12 @@ def apartments_view(request):
     }
     return render(request, template, context)
 
+def find_total_price(check_in, check_out, price):
+    """ Get total price """
+    days = check_out-check_in
+    apartment_name = ApartmentPrice.objects.get(apartment_name=apartment_name)
+    total = days.days * apartment_name.price
+    return total
 
 class BookingView(View):
     """ A function to ask for bookings from user side """
@@ -37,9 +43,9 @@ class BookingView(View):
         if form.is_valid():
             data = form.cleaned_data
             request.session['check_in'] = data['check_in'].strftime(
-                    "%Y-%m-%dT")
+                    "%Y-%m-%dT%H:%M")
             request.session['check_out'] = data['check_out'].strftime(
-                    "%Y-%m-%dT")
+                    "%Y-%m-%dT%H:%M")
             request.session['apartment_name'] = data['apartment_name']
             request.session['amount'] = find_total_room_charge(
                     data['check_in'], data['check_out'], data['apartment_name'])
