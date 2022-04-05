@@ -21,18 +21,20 @@ class Apartment(models.Model):
     image8 = models.ImageField(blank=True)
 
     def __str__(self):
-            """ Showing apartment class model created """
-            return f' {self.apartment_name} with {self.beds_nr} beds.'
+        """ Showing apartment class model created """
+        return f' {self.apartment_name} with {self.beds_nr} beds.'
+
 
 class ApartmentPrice(models.Model):
-    APARTMENTS = (('Tony', 'Tony'),
-                ('Matea', 'Matea'),
-                ('Martina', 'Martina'))
-    apartment_name = models.CharField(choices=APARTMENTS, max_length=20)
+    """ Getting the price of the apartment """
+    APARTMENTS_PRICES = (('Tony', '80.00'),
+                ('Matea', '80.00'),
+                ('Martina', '120.00'))
+    apartment_name = models.CharField(choices=APARTMENTS_PRICES, max_length=20)
     price = models.FloatField()
-    
+
     def __str__(self):
-        return f'{self.name_of_app} has a price of {self.price}'
+        return f'{self.apartment_name} has a price of {self.price}'
 
 
 class Booking(models.Model):

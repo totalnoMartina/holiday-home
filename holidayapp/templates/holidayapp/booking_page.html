@@ -3,10 +3,6 @@
 
 {% block content %}
 
-{% block extra_js %}
-
-{% endblock %}
-
 <div id="booking" class="section my-5">
     <div class="section-center">
         <div class="container mt-5">
@@ -22,43 +18,56 @@
 
                 <div class="row-col-2 mx-auto">
                     <div class="booking-form">
-                        <form method="POST" action="{% url 'bookings' %}">
+                        <form method="POST" action="{% url 'bookings' %}" enctype=multipart/form-data>
                             {% csrf_token %}
-                            <div class="form-group">
+                            <div class="form-group" name="apartment_name">
                                 <span class="form-label">Apartment</span>
                                 {{form.apartment_name}} </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <span class="form-label">Check In</span>
-                                        <div class="col-sm-6"> {{form.check_in}}</div>
+
+                            <div class="form-group">
+                                <span class="form-label" name="guest_nr">Guest Number</span>
+                                {{form.guest_nr}}
+                                <select class="form-control">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                </select>
+                                <span class="select-arrow"></span </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <span class="form-label" name="check_in">Check In</span>
+                                            <div class="col-sm-6"> {{form.check_in}}</div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6 rounded">
-                                    <div class="form-group">
-                                        <span class="form-label">Check out</span>
-                                        <div class="col-sm-6"> {{form.check_out}}</div>
+                                <div class="row">
+                                    <div class="col-sm-6 rounded">
+                                        <div class="form-group">
+                                            <span class="form-label" name="check_out">Check out</span>
+                                            <div class="col-sm-6"> {{form.check_out}}</div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <span class="form-label" name="beds_nr">Beds</span>
-                                        <select class="form-control">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                        </select>
-                                        <span class="select-arrow"></span>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <span class="form-label" id="beds_nr" name="beds_nr">Beds</span>
+                                            <select class="form-control">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                            </select>
+                                            <span class="select-arrow"></span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-btn">
-                                <button class="submit-btn">Check availability</button>
-                            </div>
+                                <div class="form-btn">
+                                    <button class="submit-btn">Book an Apartment</button>
+                                </div>
                         </form>
                     </div>
                 </div>
