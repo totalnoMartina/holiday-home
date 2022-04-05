@@ -44,7 +44,6 @@ class Booking(models.Model):
 
     def __str__(self):
         return f'A {self.user} has booked {self.apartment} from {self.check_in} until {self.check_out}'
-    
 
 
 class Guest(models.Model):
