@@ -4,31 +4,14 @@
 {% block content %}
 
 {% block extra_js %}
-<script nonce="df5f23d6-caf1-4cd7-b4d0-f69065e22320">
-    (function(w, d) {
-        ! function(a, e, t, r) {
-            a.zarazData = a.zarazData || {}, a.zarazData.executed = [], a.zarazData.tracks = [], a.zaraz = {
-                deferred: []
-            }, a.zaraz.track = (e, t) => {
-                for (key in a.zarazData.tracks.push(e), t) a.zarazData["z_" + key] = t[key]
-            }, a.zaraz._preSet = [], a.zaraz.set = (e, t, r) => {
-                a.zarazData["z_" + e] = t, a.zaraz._preSet.push([e, t, r])
-            }, a.addEventListener("DOMContentLoaded", (() => {
-                var t = e.getElementsByTagName(r)[0],
-                    z = e.createElement(r),
-                    n = e.getElementsByTagName("title")[0];
-                n && (a.zarazData.t = e.getElementsByTagName("title")[0].text), a.zarazData.w = a.screen.width, a.zarazData.h = a.screen.height, a.zarazData.j = a.innerHeight, a.zarazData.e = a.innerWidth, a.zarazData.l = a.location.href, a.zarazData.r = e.referrer, a.zarazData.k = a.screen.colorDepth, a.zarazData.n = e.characterSet, a.zarazData.o = (new Date).getTimezoneOffset(), z.defer = !0, z.src = "/cdn-cgi/zaraz/s.js?z=" + btoa(encodeURIComponent(JSON.stringify(a.zarazData))), t.parentNode.insertBefore(z, t)
-            }))
-        }(w, d, 0, "script");
-    })(window, document);
-</script>
+
 {% endblock %}
 
-<div id="booking" class="section">
+<div id="booking" class="section my-5">
     <div class="section-center">
         <div class="container mt-5">
             <div class="row">
-                <div class="col-md-7 col-md-push-5">
+                <div class="row-col-2 mx-auto">
                     <div class="booking-cta">
                         <h1>Book Here</h1>
                         <p>Welcome to Holiday Home Klanfari,
@@ -36,24 +19,27 @@
                         </p>
                     </div>
                 </div>
-                <div class="col col-md-pull-7">
+
+                <div class="row-col-2 mx-auto">
                     <div class="booking-form">
                         <form method="POST" action="{% url 'bookings' %}">
+                            {% csrf_token %}
                             <div class="form-group">
                                 <span class="form-label">Apartment</span>
-                                <input class="form-control" type="text" name="apartment" placeholder="Apartment name goes here">
-                            </div>
+                                {{form.apartment_name}} </div>
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <span class="form-label">Check In</span>
-                                        <input class="form-control" type="date" name="check_in" required>
+                                        <div class="col-sm-6"> {{form.check_in}}</div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6 rounded">
                                     <div class="form-group">
                                         <span class="form-label">Check out</span>
-                                        <input class="form-control" type="date" name="check_out" required>
+                                        <div class="col-sm-6"> {{form.check_out}}</div>
                                     </div>
                                 </div>
                             </div>
@@ -69,31 +55,6 @@
                                         <span class="select-arrow"></span>
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <span class="form-label">Adults</span>
-                                        <select class="form-control">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
-                                            <option>6</option>
-                                        </select>
-                                        <span class="select-arrow"></span>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <span class="form-label">Kids</span>
-                                        <select class="form-control">
-                                            <option>0</option>
-                                            <option>1</option>
-                                            <option>2</option>
-                                        </select>
-                                        <span class="select-arrow"></span>
-                                    </div>
-                                </div>
                             </div>
                             <div class="form-btn">
                                 <button class="submit-btn">Check availability</button>
@@ -105,19 +66,6 @@
         </div>
     </div>
 </div>
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-    gtag('js', new Date());
-
-    gtag('config', 'UA-23581568-13');
-</script>
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v652eace1692a40cfa3763df669d7439c1639079717194" integrity="sha512-Gi7xpJR8tSkrpF7aordPZQlW2DLtzUlZcumS8dMQjwDHEnw9I7ZLyiOj/6tZStRBGtGgN6ceN6cMH8z7etPGlw==" data-cf-beacon='{"rayId":"6f53fc574c6d60d4","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2021.12.0","si":100}' crossorigin="anonymous"></script>
 
 
 {% endblock %}

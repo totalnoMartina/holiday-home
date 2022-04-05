@@ -9,7 +9,7 @@ def index(request):
 
     return render(request, 'holidayapp/index.html')
 
-def apartments(request):
+def apartments_view(request):
     """ A page to view apartments """
     apartments = Apartment.objects.all()
 
@@ -37,9 +37,9 @@ class BookingView(View):
         if form.is_valid():
             data = form.cleaned_data
             request.session['check_in'] = data['check_in'].strftime(
-                    "%Y-%m-%dT%H:%M")
+                    "%Y-%m-%dT")
             request.session['check_out'] = data['check_out'].strftime(
-                    "%Y-%m-%dT%H:%M")
+                    "%Y-%m-%dT")
             request.session['apartment_name'] = data['apartment_name']
             request.session['amount'] = find_total_room_charge(
                     data['check_in'], data['check_out'], data['apartment_name'])

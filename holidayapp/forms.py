@@ -6,10 +6,10 @@ from .models import Apartment, Guest
 class AvailabilityForm(forms.Form):
     """ A form to check if apartment is available """
 
-    check_in = forms.DateTimeField(
-        required=True, input_formats=["%Y-%m-%dT", "%Y-%m-%dT%H:%M%Z"], widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}))
-    check_out = forms.DateTimeField(
-        required=True, input_formats=["%Y-%m-%dT", "%Y-%m-%dT%H:%M%Z"], widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}))
+    check_in = forms.DateField(
+        required=True, input_formats=["%Y-%m-%dT"], widget=forms.DateInput(attrs={'type': 'datetime-local'}))
+    check_out = forms.DateField(
+        required=True, input_formats=["%Y-%m-%dT"], widget=forms.DateInput(attrs={'type': 'datetime-local'}))
     apartment_name = forms.ModelChoiceField(
         queryset=Apartment.objects.all())
 
