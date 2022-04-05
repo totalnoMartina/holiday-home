@@ -30,7 +30,7 @@ class BookingView(View):
             form = AvailabilityForm(request.POST or None, initial=form_data)
         else:
             form = AvailabilityForm()
-        return render(request, 'booking_page.html', {'form': form})
+        return render(request, 'holidayapp/booking_page.html', {'form': form})
 
     def post(self, request, *args, **kwargs):
         form = AvailabilityForm(request.POST)
