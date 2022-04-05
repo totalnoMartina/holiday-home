@@ -49,7 +49,7 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link text-white btn-yellow" href="{% url 'booking_list' }">Holiday Home Klanfari - About </a>
+                    <a class="nav-link text-white btn-yellow" href="">Holiday Home Klanfari - About </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white btn-yellow" href="{% url 'apartments' %}">Apartments</a>
@@ -66,6 +66,7 @@
                         {% if request.user.is_authenticated %}
                         {% if request.user.is_superuser %}
                         <a class="dropdown-item text-white" href="{% url 'admin:index' %}">Management</a>
+                        <a class="dropdown-item text-white" href="{% url 'booking_list' %}">Accepted Bookings</a>
                         {% endif %}
                         <a class="dropdown-item text-white" href="#">My Profile</a>
                         <a class="dropdown-item text-white" href="#">Feedback</a>

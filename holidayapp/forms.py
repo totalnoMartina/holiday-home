@@ -22,7 +22,7 @@ class BookingForm(forms.Form):
     check_out = forms.DateTimeField(
         required=True, input_formats=["%Y-%m-%dT%H:%M", ])
 
-   
+
 
 
     def checking_hours(self, start, end):

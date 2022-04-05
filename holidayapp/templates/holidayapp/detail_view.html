@@ -1,119 +1,99 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Detail</title>
-    <script src="https://kit.fontawesome.com/692189991f.js" crossorigin="anonymous"></script>
-
-    <!-- Main StyleSheet -->
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
-
-</head>
-
-<body>
-
-    <!-- Main Content -->
-    <div class="content">
-
-        <!-- Room Image -->
-        <div class="image">
-            <img src="/media/images/whole-house.jpg">
+{% block content %}
+<!-- Main Content -->
+<div class="container">
+    <div class="row row-col-2 mt-5 text-white">
+        <!-- House Image -->
+        <div class="image col">
+            <img src="/media/images/whole-house.jpg" class="m-5">
         </div>
-
-        <!-- Room Details -->
-        <div class="room">
-
-            <!-- Div 1: Back to Home -->
-            <div class="home">
-                <a href="{% url 'apartments' %}"><i class="fas fa-arrow-alt-circle-left">Back to Apartments</i></a>
-            </div>
-
-            <!-- Div 2: Room Information -->
-            <div class="apartment-info">
-                <h1>{{apartment_name}}</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id optio rem saepe culpa architecto tempora
-                    numquam debitis reiciendis! Quaerat laudantium consequuntur doloribus quod placeat consectetur
-                    veniam,
-                    rerum repellendus magnam labore. </p>
-            </div>
-
-            <!-- Div 3: Room Booking Form -->
-            <form id="booking-form" action="" method="POST">
-
-                {% csrf_token %}
-                <div class="form-group" name="apartment_name">
-                    <span class="form-label">Apartment</span>
-                    {{form.apartment_name}} </div>
-
-                <!-- Input Div -->
-                <div class="input-div">
-                    <label for="id_check_in">Check In : </label>
-                    <input type="datetime-local" id="id_check_in" name="check_in">
+        <div class="row row-col-2 mt-5 text-left bg-primary rounded p-3">
+            <!-- Apartment Details -->
+            <div class="room">
+                <!-- Div 1: Back to Apartments -->
+                <div class="home">
+                    <a href="{% url 'apartments' %}"><i class="fas fa-arrow-alt-circle-left text-white display-5 m-2 hovering"> BACK TO APARTMENTS</i></a>
                 </div>
+                <!-- Div 2: Apartment Booking Form -->
+                <form id="booking-form" action="" method="POST">
 
-                <!-- Input Div -->
-                <div class="input-div">
-                    <label for="id_check_out">Check Out : </label>
-                    <input type="datetime-local" id="id_check_out" name="check_out">
-                </div>
-                <div class="form-group">
-                    <span class="form-label" name="guest_nr">Guest Number</span>
-                    {{form.guest_nr}}
-                    <select class="form-control">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                        <option>6</option>
-                    </select>
-                    <span class="select-arrow"></span></div>
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <span class="form-label" id="beds_nr" name="beds_nr">Beds</span>
-                        <select class="form-control">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                        </select>
-                        <span class="select-arrow"></span>
+                    {% csrf_token %}
+                    <div class="form-group" name="apartment_name">
+                        <span class="form-label">Apartment</span>
+                        {{form.apartment_name}} </div>
+
+                    <!-- Input Div -->
+                    <div class="input-div">
+                        <label for="id_check_in">Check In : </label>
+                        <input type="datetime-local" id="id_check_in" name="check_in">
                     </div>
-                </div>
-                <!-- Input Div -->
-                <div class="input-div">
-                    <button type="submit">Book the Room</button>
-                </div>
 
-            </form>
+                    <!-- Input Div -->
+                    <div class="input-div">
+                        <label for="id_check_out">Check Out : </label>
+                        <input type="datetime-local" id="id_check_out" name="check_out">
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <div class="form-group">
+                                <div class="form-label" name="guest_nr">Guest Number</div>
+                                {{form.guest_nr}}
+                                <select class="form-control">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                </select>
+                                <span class="select-arrow"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="form-group">
+                                <span class="form-label" id="beds_nr" name="beds_nr">Beds</span>
+                                <select class="form-control">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                                <span class="select-arrow"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-div">
+                        <button type="submit" class="btn btn-light">Book an Apartment</button>
+                    </div>
 
-        </div> <!-- END Room Div -->
+                </form>
 
-    </div> <!-- END Main Content Div -->
-
-
-    <h2>Apartments</h2>
-    <!-- Main Content -->
-    <div id="apartments">
-        {% for apartment_name, apartment_url in apartment_list %}
-        <div class="apartment">
-            <a href="{{apartment_url}}">
-                <img src="https://images.unsplash.com/photo-1519710164239-da123dc03ef4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" />
-                <h2>{{apartment_name}}
-                    <h2>
-                        <p>
-                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi
-                        </p>
-            </a>
+            </div>
         </div>
 
-        {% endfor %}
-    </div>
     </div>
 
-</body>
+
+</div> <!-- END Main Content Div -->
 
 
-</html>
+<h2>Apartments</h2>
+<!-- Main Content -->
+<div id="apartments">
+    {% for apartment_name, apartment_url in apartment_list %}
+    <div class="apartment">
+        <a href="{{apartment_url}}">
+            <img src="https://images.unsplash.com/photo-1519710164239-da123dc03ef4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" />
+            <h2>{{apartment_name}}
+                <h2>
+                    <p>
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi
+                    </p>
+        </a>
+    </div>
+
+    {% endfor %}
+</div>
+</div>
+{% endblock %}

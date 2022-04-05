@@ -2,9 +2,20 @@
 {% load static %}
 
 {% block content %}
-{% block extra_title %} Booking List{% endblock %}
+<div class="row mt-5 mx-5">
+    <div class="text-white mt-4">
+        {% block extra_title %} Booking List{% endblock %}
+    </div>
+</div>
+
 
 {%for booking in booking_list%}
-<h2>{{booking}}</h2>
+<div class="container my-2 bg-white rounded">
+    <div class="row">
+        <div class="col">
+            <div>{{booking}}</div>
+        </div>
+    </div>
+</div>
 {% endfor %}
 {% endblock %}

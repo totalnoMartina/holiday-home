@@ -1,6 +1,7 @@
 # import datetime
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib import messages
+from django.urls import reverse, reverse_lazy
 from .models import Apartment, Booking, ApartmentPrice, Guest
 from django.views.generic import View, ListView, FormView
 from .forms import GuestForm, AddNewBooking, BookingForm
@@ -22,14 +23,17 @@ def apartments(request):
         'apartments': apartments,
     }
     return render(request, template, context)
-
-
-class ApartmentListView(ListView):
-    model = Apartment
-
-
-class BookingList(ListView):
+class BookingListView(ListView):
     model = Booking
+    template_name = "booking_list.html"
+
+    def get_queryset(self, *args, **kwargs):
+        if self.request.user.is_superuser:
+            booking_list = Booking.objects.all()
+            return booking_list
+        else:
+            booking_list = Booking.objects.filter(user=self.request.user)
+            return booking_list
 
 
 class ApartmentDetailView(View):
@@ -70,9 +74,29 @@ class ApartmentDetailView(View):
                 check_out=data['check_out']
             )
             booking.save()
-            return HttpResponse(booking)
+            return render(request, 'holidayapp/app_list_view.html')
         else:
             return HttpResponse('All of this category of rooms are booked!! Try another one')
+
+
+def ApartmentListView(request):
+    apartment = Apartment.objects.all()[0]
+    apartment_names = dict(apartment.APARTMENTS)
+    apartment_values = apartment_names.values()
+    apart_list = []
+
+    for apartment_name in apartment_names:
+        apartment = apartment_names.get(apartment_name)
+        apartment_url = reverse('detail_view.html', kwargs={
+                           'name': apartment_name})
+
+        apart_list.append((apartment, apartment_url))
+    context = {
+        "apartment_list": apart_list,
+    }
+    return render(request, 'app_list_view.html', context)
+
+
 
 
 class BookingView(FormView):
@@ -134,8 +158,3 @@ def add_booking(request):
     context = {'form': form}
     return render(request, 'holidayapp/booking_page.html', context)
 
-
-class BookingListView(ListView):
-    """ A model to show bookings already booked """
-    model = Booking
-    template_name = "holidayapp/booking_list.html"
