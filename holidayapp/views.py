@@ -16,14 +16,15 @@ def index(request):
 
 def apartments(request):
     """ A page to view apartments """
-    apartments = Apartment.objects.all()
+    apartmentss = Apartment.objects.all()
 
     template = 'holidayapp/apartments.html'
     context = {
-        'apartments': apartments,
+        'apartments': apartmentss,
     }
     return render(request, template, context)
 class BookingListView(ListView):
+    """ A view to see all booked events """
     model = Booking
     template_name = "booking_list.html"
 
@@ -33,7 +34,7 @@ class BookingListView(ListView):
             return booking_list
         else:
             booking_list = Booking.objects.filter(user=self.request.user)
-            return booking_list
+            return redirect('succesfully_booked.html')
 
 
 class ApartmentDetailView(View):
@@ -157,4 +158,5 @@ def add_booking(request):
 
     context = {'form': form}
     return render(request, 'holidayapp/booking_page.html', context)
+
 

@@ -44,8 +44,10 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     # 'allauth.socialaccount.providers.facebook',
     # My apps
+    'django_summernote',
     'holidayapp',
     'holidayapp.book_func',
+    'feedback',
 ]
 
 SITE_ID = 1

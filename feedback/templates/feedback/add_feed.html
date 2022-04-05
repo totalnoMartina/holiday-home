@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<section class="section mt-5">
+    <div class="container text-white">
+        <span class="bg-primary p-2 mb-2 rounded">New Feedback</span>
+        <form method="POST" action="{% url 'add_feed' %}" class="mt-2">
+            {% csrf_token %}
+            <div class="field">
+                <div class="control">
+                    {{ form.text }}
+                </div>
+            </div>
+
+            <div class="field is-grouped is-grouped-right">
+                <div class="control">
+                    <button class="button is-link rounded btn bg-primary text-white">Submit</button>
+                </div>
+            </div>
+        </form>
+        {% if messages %}
+        <div class="text-white">
+            <strong>Messages:</strong>
+            <ul>
+                {% for message in messages %}
+                <li>{{message}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+
+{% for feedback in feedbacks %}
+<div class="main-content mb-4 p-1 mx-auto">
+    <div class="col-md-6">
+        <strong class="text-white">{{ feedback.date_posted }}</strong>
+        <br>
+        <div class="bg-white rounded p-2">
+            {{ feedback.text }}
+        </div>
+        <br>
+        <div class="text-white">
+            Posted by {{ user.name }}
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
