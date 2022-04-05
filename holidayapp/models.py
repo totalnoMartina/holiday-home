@@ -28,6 +28,7 @@ class Apartment(models.Model):
 
 
 class Booking(models.Model):
+    """ A model for details of the booking """
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE)
     check_in = models.DateField()
@@ -36,3 +37,9 @@ class Booking(models.Model):
     def __str__(self):
         return f'A {self.user} has booked {self.apartment} from {self.check_in} until {self.check_out}'
     
+
+
+class Guest(models.Model):
+    """ About the guest """
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
