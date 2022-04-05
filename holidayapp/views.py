@@ -1,11 +1,10 @@
 # import datetime
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib import messages
-from django.core import serializers
 from .models import Apartment, Booking, ApartmentPrice, Guest
 from django.views.generic import View, ListView, FormView
-from .forms import AvailabilityForm, GuestForm, AddNewBooking
-# from .book_func import check_if_available
+from .forms import GuestForm, AddNewBooking, BookingForm
+from .book_func import check_if_available
 
 
 def index(request):
@@ -36,8 +35,8 @@ class BookingList(ListView):
 class ApartmentDetailView(View):
     def get(self, request, *args, **kwargs):
         apartment_name = self.kwargs.get('apartment_name', None)
-        form = AvailabilityForm()
-        apartment_list = Apartment.objects.filter(category=category)
+        form = BookingForm()
+        apartment_list = Apartment.objects.filter(apartment_name=apartment_name)
 
         if len(apartment_list) > 0:
             apartment = apartment_list[0]
@@ -46,23 +45,21 @@ class ApartmentDetailView(View):
                 'apartment_name': apartment_name,
                 'form': form,
             }
-            # return render(request, 'ap_detail_view.html', context)
-            return JsonResponse(serializers.serialize('json', Apartment), safe=False)
+            return render(request, 'holidayapp/detail_view.html', context)
         else:
             return HttpResponse('Category does not exist')
 
     def post(self, request, *args, **kwargs):
         apartment_name = self.kwargs.get('apartment_name', None)
         apartment_list = Apartment.objects.filter(apartment_name=apartment_name)
-        form = AvailabilityForm(request.POST)
-
+        form = BookingForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
 
         available_aparts = []
         for apartment in apartment_list:
-            if check_availability(room, data['check_in'], data['check_out']):
-                available_aparts.append(apartment)
+            # if check_if_available(apartment, data['check_in'], data['check_out']):
+            available_aparts.append(apartment)
 
         if len(available_aparts) > 0:
             apartment = available_aparts[0]
@@ -79,30 +76,31 @@ class ApartmentDetailView(View):
 
 
 class BookingView(FormView):
-    form_class = AvailabilityForm
-    template_name = 'availability_form.html'
+    """ A view to see bookings """
+    form_class = BookingForm
+    template_name = 'holidayapp/booking_page.html'
 
     def form_valid(self, form):
         data = form.cleaned_data
-        room_list = Room.objects.filter(category=data['room_category'])
-        available_rooms = []
-        for room in room_list:
-            if check_availability(room, data['check_in'], data['check_out']):
-                available_rooms.append(room)
+        apartment_list = Apartment.objects.filter(apartment_name=data['apartment_name'])
+        available_aparts = []
+        for apartment in apartment_list:
+            # if check_if_available(apartment, data['check_in'], data['check_out']):
+            #     available_aparts.append(apartment)
 
-        if len(available_rooms) > 0:
-            room = available_rooms[0]
-            booking = Booking.objects.create(
-                user=self.request.user,
-                room=room,
-                check_in=data['check_in'],
-                check_out=data['check_out']
-            )
-            booking.save()
-            return HttpResponse(booking)
-        else:
-            return HttpResponse('All of this category of rooms are booked!! Try another one')
-
+            if len(available_aparts) > 0:
+                apartment = available_aparts[0]
+                booking = Booking.objects.create(
+                    user=self.request.user,
+                    apartment=apartment,
+                    check_in=data['check_in'],
+                    check_out=data['check_out']
+                )
+                booking.save()
+                return HttpResponse(booking)
+            else:
+                return HttpResponse('This apartment is already booked, please try another one')
+        return HttpResponse('The apartment is booked')
 
 
 #####
@@ -140,34 +138,4 @@ def add_booking(request):
 class BookingListView(ListView):
     """ A model to show bookings already booked """
     model = Booking
-    template_name = "holidayapp/booking_page.html"
-
-    def get_queryset(self, *args, **kwargs):
-
-        if self.request.user.is_staff:
-            booking_list = Booking.objects.all()
-            return booking_list
-        else:
-            booking_list = Booking.objects.filter(user=self.request.user)
-            return booking_list
-
-
-class CheckoutView(View):
-    """ A checking ojut view """
-    def get(self, request, *args, **kwargs):
-        guest_form = GuestForm()
-        context = {
-            "guest_form": guest_form,
-        }
-        return render(request, 'holidayapp/checkout.html', context)
-
-    def post(self, request, *args, **kwargs):
-
-        guest = Guest.objects.create(
-            name=guest_name,
-            email=guest_email
-        )
-        person.save()
-        context = {
-            'guest': guest,
-        }
+    template_name = "holidayapp/booking_list.html"

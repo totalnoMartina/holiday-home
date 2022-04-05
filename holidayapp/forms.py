@@ -12,15 +12,17 @@ class AddNewBooking(forms.ModelForm):
         fields = '__all__'
 
 
-class AvailabilityForm(forms.Form):
+class BookingForm(forms.Form):
     """ A form to check if apartment is available """
 
-    check_in = forms.DateTimeField(
-        required=False, input_formats=["%Y-%m-%dT%H:%M", ], widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}))
-    check_out = forms.DateTimeField(
-        required=False, input_formats=["%Y-%m-%dT%H:%M", ], widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}))
     apartment_name = forms.ModelChoiceField(
         queryset=Apartment.objects.all())
+    check_in = forms.DateTimeField(
+        required=True, input_formats=["%Y-%m-%dT%H:%M", ])
+    check_out = forms.DateTimeField(
+        required=True, input_formats=["%Y-%m-%dT%H:%M", ])
+
+   
 
 
     def checking_hours(self, start, end):

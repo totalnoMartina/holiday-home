@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% block extra_title %} Booking List{% endblock %}
+
+{%for booking in booking_list%}
+<h2>{{booking}}</h2>
+{% endfor %}
+{% endblock %}
