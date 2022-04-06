@@ -103,7 +103,7 @@ Forking the repository allows you to make a copy of the original in your GitHub 
 **How to run this project locally**
 
 1. Log onto Github: create an account if required.
-2. From the list of repositories, select CatherineTrevor/the_marketing_ally.
+2. From the list of repositories, select 'the repo name/project name'
 3. Click the "Code" dropdown within the menu above the commits.
 4. Copy the URL address, or Download ZIP and save locally.
 5. Open your chosen IDE and navigate to the location you want the cloned directory to be saved.
