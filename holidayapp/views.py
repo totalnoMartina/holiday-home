@@ -3,8 +3,8 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
 from .models import Apartment, Booking, ApartmentPrice, Guest
-from django.views.generic import View, ListView, FormView
-from .forms import GuestForm, AddNewBooking, BookingForm
+from django.views.generic import View, ListView, FormView, DeleteView
+from .forms import AddNewBooking, BookingForm
 from .book_func import check_if_available
 
 
@@ -75,12 +75,14 @@ class ApartmentDetailView(View):
                 check_out=data['check_out']
             )
             booking.save()
-            return render(request, 'holidayapp/app_list_view.html')
+            messages.success('/', 'Booking requested successfully')
+            return render(request, 'holidayapp/apartments.html')
         else:
             return HttpResponse('All of this category of rooms are booked!! Try another one')
 
 
 def ApartmentListView(request):
+    """ See the list of apartments """
     apartment = Apartment.objects.all()[0]
     apartment_names = dict(apartment.APARTMENTS)
     apartment_values = apartment_names.values()
@@ -88,16 +90,14 @@ def ApartmentListView(request):
 
     for apartment_name in apartment_names:
         apartment = apartment_names.get(apartment_name)
-        apartment_url = reverse('detail_view.html', kwargs={
-                           'name': apartment_name})
+        apartment_url = reverse('ApartmentListView', kwargs={
+                           'name': apartment_name, }, current_app='holidayapp')
 
         apart_list.append((apartment, apartment_url))
     context = {
         "apartment_list": apart_list,
     }
     return render(request, 'app_list_view.html', context)
-
-
 
 
 class BookingView(FormView):
@@ -128,35 +128,9 @@ class BookingView(FormView):
         return HttpResponse('The apartment is booked')
 
 
-#####
-
-def find_total_price(check_in, check_out, price):
-    """ Get total price """
-    days = check_out-check_in
-    apartment_name = ApartmentPrice.objects.get(apartment_name=apartment_name)
-    total = days.days * apartment_name.price
-    return total
-
-
-def add_booking(request):
-
-    form = AddNewBooking()
-    if request.method == 'POST':
-        form = AddNewBooking(request.POST, request.FILES)
-        if form.is_valid():
-            booking = Booking.objects.create(
-                user=request.user,
-                apartment=apartment,
-                check_in=data['check_in'],
-                check_out=data['check_out']
-            )
-            booking.save()
-            return HttpResponse(booking)
-        form.save()
-        messages.success(request, 'Booking Added Successfully')
-        return redirect('bookings')
-
-    context = {'form': form}
-    return render(request, 'holidayapp/booking_page.html', context)
-
+class CancelBookingView(DeleteView):
+    """ A view to cancel bookings """
+    model = Booking
+    template_name = 'booking_cancel_view.html'
+    success_url = reverse_lazy('hotel:BookingListView')
 

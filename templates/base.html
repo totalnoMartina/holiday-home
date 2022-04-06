@@ -49,7 +49,7 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link text-white btn-yellow" href="">Holiday Home Klanfari - About </a>
+                    <a class="nav-link text-white btn-yellow" href="#">Holiday Home Klanfari - About </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white btn-yellow" href="{% url 'apartments' %}">Apartments</a>
@@ -71,6 +71,7 @@
                         <a class="dropdown-item text-white" href="#">My Profile</a>
                         <a class="dropdown-item text-white" href="{% url 'feedback' %}">Feedback</a>
                         <a class="dropdown-item text-white" href="{% url 'add_feed' %}">Add Feedback</a>
+                        <a class="dropdown-item text-white" href="#">App List</a>
                         <a class="dropdown-item text-white" href="{% url 'account_logout' %}">Logout</a>
                         {% else %}
                         <a href="{% url 'account_signup' %}" class="dropdown-item text-white"><span>Register</span></a>
