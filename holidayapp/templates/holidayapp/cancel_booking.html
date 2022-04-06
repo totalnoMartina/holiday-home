@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Apartment Details -->
+<div class="apartment">
+
+    <!-- Div 1: Back to Apartments page -->
+    <div class="apartments">
+        <a href="{% url 'apartments' %}"><i class="fas fa-arrow-alt-circle-left">Apartments</i></a>
+    </div>
+
+    <!-- Div 2: Room Information -->
+    <div class="apartment-name">
+        <h1>{{apartment_name}}</h1>
+    </div>
+
+    <!-- Div 3: Room Booking Form -->
+    <form id="booking-form" action="" method="POST">
+
+        {% csrf_token %}
+        <h2>Are you sure you wanna cancel this Booking? Details-</h2>
+        <h3>{{booking.apartment.apartment_name}}{{booking.get_apartment_name}} {{booking}}</h3>
+        <!-- Input Div -->
+        <div class="input-div">
+            <button type="submit">Cancel the Booking</button>
+        </div>
+
+    </form>
+
+</div> <!-- END Apartment Div -->
+{% endblock %}

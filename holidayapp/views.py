@@ -2,8 +2,8 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
-from .models import Apartment, Booking, ApartmentPrice, Guest
 from django.views.generic import View, ListView, FormView, DeleteView
+from .models import Apartment, Booking, ApartmentPrice, Guest
 from .forms import AddNewBooking, BookingForm
 from .book_func import check_if_available
 
@@ -75,7 +75,6 @@ class ApartmentDetailView(View):
                 check_out=data['check_out']
             )
             booking.save()
-            messages.success('/', 'Booking requested successfully')
             return render(request, 'holidayapp/apartments.html')
         else:
             return HttpResponse('All of this category of rooms are booked!! Try another one')
@@ -132,5 +131,4 @@ class CancelBookingView(DeleteView):
     """ A view to cancel bookings """
     model = Booking
     template_name = 'booking_cancel_view.html'
-    success_url = reverse_lazy('hotel:BookingListView')
-
+    success_url = reverse_lazy('holidayapp:BookingListView')
