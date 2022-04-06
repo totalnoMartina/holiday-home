@@ -1,8 +1,9 @@
 import datetime
-from holidayapp.models import Apartment, Booking
+from holidayapp.models import Booking, Apartment
 
 
 def check_if_available(apartment, check_in, check_out):
+    """ Checking if the apartment is already booked """
     vacant_list = []
     booked_list = Booking.objects.filter(apartment=apartment)
     for booking in booked_list:

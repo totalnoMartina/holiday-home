@@ -41,8 +41,8 @@ class Booking(models.Model):
     """ A model for details of the booking """
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE)
-    check_in = models.DateField()
-    check_out = models.DateField()
+    check_in = models.DateTimeField()
+    check_out = models.DateTimeField()
 
     def __str__(self):
         return f'A {self.user} has booked {self.apartment} from {self.check_in} until {self.check_out}'

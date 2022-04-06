@@ -75,7 +75,8 @@ class ApartmentDetailView(View):
                 check_out=data['check_out']
             )
             booking.save()
-            return render(request, 'holidayapp/apartments.html')
+            return HttpResponse(booking)
+            # return render(request, 'holidayapp/apartments.html')
         else:
             return HttpResponse('All of this category of rooms are booked!! Try another one')
 
