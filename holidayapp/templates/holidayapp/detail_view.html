@@ -20,8 +20,8 @@
                 <form id="booking-form" action="" method="POST">
 
                     {% csrf_token %}
-                    <div class="form-group" name="apartment_name">
-                        <span class="form-label">Apartment</span>
+                    <div class="form-group">
+                        <span class="form-label" name="apartment_name">Apartment</span>
                         {{form.apartment_name}} </div>
 
                     <!-- Input Div -->

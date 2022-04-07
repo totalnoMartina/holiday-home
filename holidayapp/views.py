@@ -49,9 +49,10 @@ class ApartmentDetailView(View):
         apartment_list = Apartment.objects.filter(apartment_name=apartment_name)
 
         if apartment_list:
-            apartment = apartment_list[0]
-            apartment_name = dict(apartment.APARTMENTS).get(apartment.apartment_name, None)
+            apartments = apartment_list[0]
+            apartment_name = dict(apartments.APARTMENTS).get(apartments.apartment_name, None)
             context = {
+                'apartments': apartments,
                 'apartment_name': apartment_name,
                 'form': form,
             }
