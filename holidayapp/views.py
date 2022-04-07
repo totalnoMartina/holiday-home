@@ -44,6 +44,7 @@ class ApartmentDetailView(View):
     """ A view that guides to booking and apartment """
     def get(self, request, *args, **kwargs):
         apartment_name = self.kwargs.get('apartment_name', None)
+        apartment_url = get_object_or_404(Apartment, pk=apartment_name)
         form = BookingForm(request.GET)
         apartment_list = Apartment.objects.filter(apartment_name=apartment_name)
 
@@ -93,19 +94,19 @@ def ApartmentListView(request):
     """ See the list of apartments """
     apartment = Apartment.objects.all()[0]
     apartment_names = dict(apartment.APARTMENTS)
-    apartment_values = apartment_names.values()
+    apartment_values = apartment_names.keys()
     apart_list = []
 
     for apartment_name in apartment_names:
         apartment = apartment_names.get(apartment_name)
-        apartment_url = reverse('holidayapp:ApartmentsListView', kwargs={
-                           'name': apartment_name, }, current_app='holidayapp')
+        apartment_url = reverse_lazy('ApartmentList', kwargs={
+                           'apartment_name': apartment_name, })
 
         apart_list.append((apartment, apartment_url))
     context = {
         "apartment_list": apart_list,
     }
-    return render(request, 'detail_view.html', context)
+    return render(request, 'holidayapp/detail_view.html', context)
 
 
 class BookingView(FormView):
