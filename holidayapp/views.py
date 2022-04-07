@@ -52,7 +52,6 @@ class ApartmentDetailView(View):
             apartments = apartment_list[0]
             apartment_name = dict(apartments.APARTMENTS).get(apartments.apartment_name, None)
             context = {
-                'apartments': apartments,
                 'apartment_name': apartment_name,
                 'form': form,
             }
@@ -93,8 +92,8 @@ class ApartmentDetailView(View):
 
 def ApartmentListView(request):
     """ See the list of apartments """
-    apartment = Apartment.objects.all()[0]
-    apartment_names = dict(apartment.APARTMENTS)
+    apartment_all = Apartment.objects.all()[0]
+    apartment_names = dict(apartment_all.APARTMENTS)
     apartment_values = apartment_names.keys()
     apart_list = []
 
