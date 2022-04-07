@@ -2,6 +2,19 @@
 {% load static %}
 
 {% block content %}
+<div class="row mx-auto">
+
+    {% if messages %}
+    <div class="text-white mx-auto bg-primary rounded p-2" id="message-container">
+        <strong>Feedback:</strong>
+        <ul>
+            {% for message in messages %}
+            <li>{{message}}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+</div>
 <div class="row mt-5 mx-5 text-center">
     <div class="col-sm-6 text-white mt-5 display-4">
         {% block extra_title %} Booking List{% endblock %}

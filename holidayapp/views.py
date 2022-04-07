@@ -1,5 +1,5 @@
 # import datetime
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
 from django.views.generic import View, ListView, FormView, DeleteView
@@ -23,6 +23,8 @@ def apartments(request):
         'apartments': apartmentss,
     }
     return render(request, template, context)
+
+
 class BookingListView(ListView):
     """ A view to see all booked events """
     model = Booking
@@ -35,15 +37,17 @@ class BookingListView(ListView):
         else:
             booking_list = Booking.objects.filter(user=self.request.user)
             return redirect('succesfully_booked.html')
+        return render(request, template_name)
 
 
 class ApartmentDetailView(View):
+    """ A view that guides to booking and apartment """
     def get(self, request, *args, **kwargs):
         apartment_name = self.kwargs.get('apartment_name', None)
-        form = BookingForm()
+        form = BookingForm(request.GET)
         apartment_list = Apartment.objects.filter(apartment_name=apartment_name)
 
-        if len(apartment_list) > 0:
+        if apartment_list:
             apartment = apartment_list[0]
             apartment_name = dict(apartment.APARTMENTS).get(apartment.apartment_name, None)
             context = {
@@ -52,7 +56,7 @@ class ApartmentDetailView(View):
             }
             return render(request, 'holidayapp/detail_view.html', context)
         else:
-            return HttpResponse('Category does not exist')
+            return HttpResponse('Category does not existsss')
 
     def post(self, request, *args, **kwargs):
         apartment_name = self.kwargs.get('apartment_name', None)
@@ -75,7 +79,11 @@ class ApartmentDetailView(View):
                 check_out=data['check_out']
             )
             booking.save()
-            return HttpResponse(booking)
+            messages.add_message(request, messages.SUCCESS, 'Thank you, your booking is requested!')
+            # return redirect('succesfully_booked.html')
+            # return reverse_lazy('booking_list')
+
+            return redirect('home')
             # return render(request, 'holidayapp/apartments.html')
         else:
             return HttpResponse('All of this category of rooms are booked!! Try another one')
@@ -90,14 +98,14 @@ def ApartmentListView(request):
 
     for apartment_name in apartment_names:
         apartment = apartment_names.get(apartment_name)
-        apartment_url = reverse('ApartmentListView', kwargs={
+        apartment_url = reverse('holidayapp:ApartmentsListView', kwargs={
                            'name': apartment_name, }, current_app='holidayapp')
 
         apart_list.append((apartment, apartment_url))
     context = {
         "apartment_list": apart_list,
     }
-    return render(request, 'app_list_view.html', context)
+    return render(request, 'detail_view.html', context)
 
 
 class BookingView(FormView):
@@ -122,7 +130,8 @@ class BookingView(FormView):
                     check_out=data['check_out']
                 )
                 booking.save()
-                return HttpResponse(booking)
+                return reverse_lazy('booking_list')
+                # return HttpResponse(booking)
             else:
                 return HttpResponse('This apartment is already booked, please try another one')
         return HttpResponse('The apartment is booked')
@@ -132,4 +141,4 @@ class CancelBookingView(DeleteView):
     """ A view to cancel bookings """
     model = Booking
     template_name = 'booking_cancel_view.html'
-    success_url = reverse_lazy('holidayapp:BookingListView')
+    success_url = reverse_lazy('booking_list')
