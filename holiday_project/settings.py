@@ -27,8 +27,9 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['home-holiday.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['holiday-home.herokuapp.com', 'localhost']
 
+CSRF_TRUSTED_ORIGINS = ['holiday-home.herokuapp.com', 'holiday-home.herokuapp.com/accounts/' ]
 
 # Application definition
 
@@ -82,7 +83,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                 'django.template.context_processors.media',  # For media files
+                'django.template.context_processors.media',  # For media files
                                                              # in dev and pro
             ],
         },
